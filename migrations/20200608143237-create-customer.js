@@ -20,6 +20,9 @@ module.exports = {
       mail: {
         type: Sequelize.STRING
       },
+      password: {
+        type: Sequelize.STRING
+      },
       icon: {
         type: Sequelize.STRING
       },
