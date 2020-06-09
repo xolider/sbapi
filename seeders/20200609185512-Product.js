@@ -12,8 +12,12 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Stocks', [{
-      name: 'Arras'
+    return queryInterface.bulkInsert('Products', [{
+      name: 'Visière',
+      price: 5,
+      image: 'none',
+      description: "Visière de protection imprimée en 3D",
+      quantity: 0
     }], {})
   },
 
@@ -25,6 +29,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-    return queryInterface.bulkDelete('Stocks', null, {})
+    return queryInterface.bulkDelete('Products', null, {})
   }
 };

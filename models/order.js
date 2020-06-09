@@ -41,7 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   Order.associate = function(models) {
-    // associations can be defined here
+    Order.belongsTo(models.Product, {foreignKey: 'id_product'})
+    Order.belongsTo(models.Customer, {foreignKey: 'id_customer'})
+    Order.belongsTo(models.OrderStatus, {foreignKey: 'id_orderstatus'})
   };
   return Order;
 };

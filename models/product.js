@@ -11,21 +11,12 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.INTEGER,
     image: DataTypes.STRING,
     description: DataTypes.TEXT,
-    quantity: DataTypes.INTEGER,
-    id_stock: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Stocks',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
-    }
+    quantity: DataTypes.INTEGER
   }, {
     timestamps: false
   });
   Product.associate = function(models) {
-    // associations can be defined here
+    Product.hasMany(models.Order, {foreignKey: 'id_product'})
   };
   return Product;
 };

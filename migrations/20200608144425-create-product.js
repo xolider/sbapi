@@ -22,15 +22,6 @@ module.exports = {
       },
       quantity: {
         type: Sequelize.INTEGER
-      },
-      id_stock: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Stocks',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
       }
     });
   },

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   OrderStatus.associate = function(models) {
-    // associations can be defined here
+    OrderStatus.hasMany(models.Order, {foreignKey: 'id_orderstatus'})
   };
   return OrderStatus;
 };

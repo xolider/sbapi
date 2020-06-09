@@ -17,8 +17,6 @@ module.exports = {
     }, {
       name: 'En production'
     }, {
-      name: 'Expédiée'
-    }, {
       name: 'En livraison'
     }, {
       name: 'Livrée'

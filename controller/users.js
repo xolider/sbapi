@@ -9,7 +9,11 @@ module.exports = {
                 Error: 'Paramètres manquants (email ou mot de passe)'
             })
         }
-        let userFound = await models.Customer.findOne({where: {mail: req.body.mail}})
+        let userFound = await models.Customer.findOne({where: {mail: req.body.mail}, include: [
+                {
+                    model: models.UserType
+                }
+            ]})
         if(userFound === null) {
             return res.status(404).json({
                 Error: 'Utilisateur non trouvé'
