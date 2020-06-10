@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const usersRouter = require('./routes/users')
 const ordersRouter = require('./routes/orders')
+const productsRouter = require('./routes/products')
 
 let host = "0.0.0.0"
 let port = 8000
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', usersRouter)
 app.use('/orders', ordersRouter)
+app.use('/products', productsRouter)
 
 app.use((req, res) => {
     let err = new Error('Not found')
