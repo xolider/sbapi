@@ -1,4 +1,5 @@
 const models = require('../models')
+const jwt = require('../helpers/jwt')
 
 module.exports = {
     get_orders: async (req, res) => {
@@ -42,19 +43,45 @@ module.exports = {
         })
     },
     get_order: async (req, res) => {
-        let orders = await models.Order.findAll({where: {id_customer: req.params.customerid}, include: [
-                {
-                    model: models.OrderStatus
-                },
-                {
-                    model: models.Product
-                }
-            ]})
-        if(orders.length === 0) {
-            return res.status(404).json({
-                Error: 'Pas de commandes trouvées pour ce client'
+        let user = await jwt.getUserFromJWT(req, res)
+        if(user.statusCode === 200) {
+            let userId = user.body.id
+            let orders = await models.Order.findAll({where: {id_customer: userId}, include: [
+                    {
+                        model: models.OrderStatus
+                    },
+                    {
+                        model: models.Product
+                    }
+                ]})
+            if(orders.length === 0) {
+                return res.status(404).json({
+                    Error: 'Pas de commandes trouvées pour ce client'
+                })
+            }
+            return res.status(200).json(orders)
+        }
+        else {
+            return res.status(user.statusCode).json(user.body)
+        }
+    },
+    put_order: async(req, res) => {
+        let user = await jwt.getUserFromJWT(req, res)
+        if(user.statusCode !== 200) {
+            return res.status(user.statusCode).json(user.body)
+        }
+        if(user.body.id_usertype !== 1) {
+            return res.status(503).json({
+                Error: 'Vous n\'avez pas l\'autorisation de modifier cette ressource'
             })
         }
-        return res.status(200).json(orders)
+        let order = req.body.order
+        if(order === undefined) {
+            return res.status(412).json({
+                Error: 'Données manquantes'
+            })
+        }
+        let response = await models.Order.update(order, {where: {id: order.id}})
+        return res.status(200).json(response)
     }
 }

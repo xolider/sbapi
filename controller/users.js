@@ -30,5 +30,9 @@ module.exports = {
             token: token,
             user: userFound
         })
+    },
+    get_me: async (req, res) => {
+        let user = await jwt.getUserFromJWT(req, res)
+        return res.status(user.statusCode).json(user.body)
     }
 }
