@@ -17,7 +17,13 @@ module.exports = {
         if(!token) {
             return {statusCode: 401, body: {Error: 'jeton d\'authentification manquant'}}
         }
-        let jwtToken = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET)
+        let jwtToken = {}
+        try {
+            jwtToken = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET)
+        }
+        catch (e) {
+            return {statusCode: 401, body: {Error: 'Jeton d\'authentification expiré'}}
+        }
         if(jwtToken != null) {
             let userId = jwtToken.id
             let user = await models.Customer.findOne({where: {id: userId}})
