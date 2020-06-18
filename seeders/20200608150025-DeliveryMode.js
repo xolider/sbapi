@@ -14,6 +14,8 @@ module.exports = {
     */
     return queryInterface.bulkInsert('DeliveryModes', [{
       name: 'Remise en main propres'
+    }, {
+      name: 'Retrait au campus d\'Arras'
     }], {})
   },
 
